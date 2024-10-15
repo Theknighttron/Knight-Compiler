@@ -103,3 +103,44 @@ What matter's is what it does:
 - It has a program counter: it fetches instructions, decodes and execute them.
 - It has a stack
 - It has call stack and sometimes even registers all built in one software
+
+### Bytecode
+
+Virtual Machine execute bytecode, bytecode is made up of instructions that tell the machine what to do.
+It's called bytecode because the opcodes contained in each instructions are one byte in size,
+An "opcode" is the "operator" part of an instruction sometimes also called "op".
+
+Little endian -> means that the least significant byte of the original data comes first and is stored in the lowest memory address.
+Big endian -> is the opposite whereby the most significant byte comes first
+
+    1.Objective
+    Compile and execute below knight expression:
+        1 + 2
+    - take the knight expression 1 +2
+    - tokenize and parse it using our existing lexer, token and parser packages
+    - take the resulting AST, whose node are defined in our ast package
+    - pass it to the newly built compiler, which compile it to bytecode
+    - take the bytecode and hand it over to the also newly-built virtual machine which will execute it
+    - make sure that the virtual machine turned it into 3.
+
+    | Lexer | --> | Parser | --> | Compiler | --> | Virtual Machine |
+
+    In term of data structure:
+
+    | String | --> | Tokens | --> | AST | --> | Bytecode | --> | Objects |
+
+Type Assertion -> is a way to extract underlying value of an interface and convert it to a specific type.
+Type Casting/Conversion -> refers to converting a value from one type to another.
+
+    | Lexer | --> | Parser | --> | Compiler | --> | Virtual Machine |
+    [-----------Compile Time----------------]     [-- Run Time------]
+
+`const (
+    OpConstant Opcode = iota  // 0
+    OpAdd                     // 1
+    OpSubtract                // 2
+    OpMultiply                // 3
+)`
+
+The `const` keyword is used to define constants.
+The `iota` keyword is a special identifier that simplifies the process of defining incrementing constants
