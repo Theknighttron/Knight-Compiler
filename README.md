@@ -136,10 +136,10 @@ Type Casting/Conversion -> refers to converting a value from one type to another
     [-----------Compile Time----------------]     [-- Run Time------]
 
 `const (
-    OpConstant Opcode = iota  // 0
-    OpAdd                     // 1
-    OpSubtract                // 2
-    OpMultiply                // 3
+    OpConstant Opcode = iota  -  0
+    OpAdd                     -  1
+    OpSubtract                -  2
+    OpMultiply                -  3
 )`
 
 The `const` keyword is used to define constants.
