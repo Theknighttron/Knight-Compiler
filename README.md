@@ -135,12 +135,14 @@ Type Casting/Conversion -> refers to converting a value from one type to another
     | Lexer | --> | Parser | --> | Compiler | --> | Virtual Machine |
     [-----------Compile Time----------------]     [-- Run Time------]
 
-`const (
+```
+const (
     OpConstant Opcode = iota  -  0
     OpAdd                     -  1
     OpSubtract                -  2
     OpMultiply                -  3
-)`
+)
+```
 
 The `const` keyword is used to define constants.
 The `iota` keyword is a special identifier that simplifies the process of defining incrementing constants
