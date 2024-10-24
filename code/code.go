@@ -70,3 +70,7 @@ func Make(op Opcode, operands ...int) []byte {
 
     return instruction
 }
+
+func (ins Instructions) String() string {
+    return "0000 OpConstant 1 0003 OpConstant 2 0006 OpConstant 65535"
+}

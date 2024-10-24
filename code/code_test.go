@@ -32,3 +32,22 @@ func TestMake(t *testing.T) {
         }
     }
 }
+
+func TestInstructionString(t *testing.T) {
+    instructions := []Instructions {
+        Make(OpConstant, 1),
+        Make(OpConstant, 2),
+        Make(OpConstant, 65535),
+    }
+
+    expected := `0000 OpConstant 1 0003 OpConstant 2 0006 OpConstant 65535`
+
+    concatted := Instructions{}
+    for _, ins := range instructions {
+        concatted = append(concatted, ins...)
+    }
+
+    if concatted.String() != expected {
+        t.Errorf("instructions wrongly formated.\nwant=%q\ngot=%q", expected, concatted.String())
+    }
+}
