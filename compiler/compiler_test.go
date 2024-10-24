@@ -5,6 +5,7 @@ import (
 	"knightcompiler/ast"
 	"knightcompiler/code"
 	"knightcompiler/lexer"
+	"knightcompiler/object"
 	"knightcompiler/parser"
 	"testing"
 )
@@ -36,7 +37,7 @@ func runCompilerTests(t *testing.T, tests []compilerTestCase) {
     t.Helper()
 
     for _, tt := range tests {
-        // 1. Parse the input
+        // 1. Parse the input to produce an AST
         program := parse(tt.input)
 
         // 2. Create new compiler instance
@@ -52,13 +53,13 @@ func runCompilerTests(t *testing.T, tests []compilerTestCase) {
         bytecode := compiler.Bytecode()
 
         // 5. Test the instructions
-        err := testInstructions(tt.expectedInstructions, bytecode.Instructions)
+        err = testInstructions(tt.expectedInstructions, bytecode.Instructions)
         if err != nil {
             t.Fatalf("Test instructions failed %s", err)
         }
 
         // 6. Test the constants
-        err := testConstant(t, tt.expectedConstants, bytecode.Constants)
+        err = testConstants(t, tt.expectedConstants, bytecode.Constants)
         if err != nil {
             t.Fatalf("Test Constants failed %s", err)
         }
@@ -106,8 +107,35 @@ func concatInstructions(s []code.Instructions) code.Instructions {
     return out
 }
 
-func testConstant() {
+func testConstants(t *testing.T, expected []interface{}, actual []object.Object) error {
+    if len(expected) != len(actual) {
+        return fmt.Errorf("Wrong number of constants. got=%d, want=%d", len(actual), len(expected))
+    }
 
+    for i, constant := range expected {
+        switch constant := constant.(type) {
+        case int:
+            err := testIntegerObject(int64(constant), actual[i])
+            if err != nil {
+                return fmt.Errorf("Constant %d - testIntegerObject failed: %s", i, err)
+            }
+        }
+    }
+
+    return nil
+}
+
+func testIntegerObject(expected int64, actual object.Object) error {
+    result, ok := actual.(*object.Integer)
+    if !ok {
+        return fmt.Errorf("object is not Integer. got=%T (%+v)", actual, actual)
+    }
+
+    if result.Value != expected {
+        return fmt.Errorf("object has wrong value. got=%d, want=%d", result.Value, expected)
+    }
+
+    return nil
 }
 
 
