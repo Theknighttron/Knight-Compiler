@@ -2,6 +2,7 @@ package code
 
 import (
     "fmt"
+    "bytes"
     "encoding/binary"
 )
 
@@ -71,10 +72,43 @@ func Make(op Opcode, operands ...int) []byte {
     return instruction
 }
 
+// String representation of instructions
 func (ins Instructions) String() string {
-    return "0000 OpConstant 1 0003 OpConstant 2 0006 OpConstant 65535"
+    var out bytes.Buffer
+
+    i := 0
+    for i < len(ins) {
+        def, err := Lookup(ins[i])
+        if err != nil {
+            fmt.Fprintf(&out, "ERROR: %s\n", err)
+            continue
+        }
+
+        operands, read := ReadOperands(def, ins[i+1:])
+
+        fmt.Fprintf(&out, "%04d %s\n", i, ins.fmtInstruction(def, operands))
+         i +=  1 + read
+    }
+
+    return out.String()
 }
 
+func (ins Instructions) fmtInstruction(def *Definition, operands []int) string {
+    operandCount := len(def.OperandWidths)
+
+    if len(operands) != operandCount {
+        return fmt.Sprintf("Error: operand len %d does not match defined %d\n", len(operands), operandCount)
+    }
+
+    switch operandCount {
+    case 1:
+        return fmt.Sprintf("%s %d", def.Name, operands[0])
+    }
+
+    return fmt.Sprintf("Error: unhandled operandCount for %s\n", def.Name)
+}
+
+// Decode the operands along with the total number of bytes read
 func ReadOperands(def *Definition, ins Instructions) ([]int, int) {
     operands := make([]int, len(def.OperandWidths))
     offset := 0
@@ -91,6 +125,7 @@ func ReadOperands(def *Definition, ins Instructions) ([]int, int) {
     return operands, offset
 }
 
+// check for correct operands and number of byte reads
 func ReadUint16(ins Instructions) uint16 {
     return binary.BigEndian.Uint16(ins)
 }
