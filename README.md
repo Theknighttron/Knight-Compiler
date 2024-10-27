@@ -109,12 +109,12 @@ What matter's is what it does:
 Virtual Machine execute bytecode, bytecode is made up of instructions that tell the machine what to do.
 It's called bytecode because the opcodes contained in each instructions are one byte in size,
 
-An "opcode" is the "operator" part of an instruction sometimes also called "op".
+- An "opcode" is the "operator" part of an instruction sometimes also called "op".
 
 > Opcode is the part of machine language instruction that specifies the operation to be performed.
 > It tells the processor what kind of operation needs to be executed, in assembly or machine code
 
-Operands are the values or data in which an instruction (such as opcode) operates.
+- Operands are the values or data in which an instruction (such as opcode) operates.
 
 > They are typically the inputs or parameters required by the operations specified by the opcode.
 > In machine code or assembly language, operands can be:
