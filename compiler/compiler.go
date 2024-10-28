@@ -27,6 +27,8 @@ func New()*Compiler {
 
 func (c *Compiler) Compile(node ast.Node) error {
     switch node := node.(type) {
+    // if the node is a program (entry pooint of AST)
+    // compile each statement in its Statements list.
     case *ast.Program:
         for _, s := range node.Statements {
             err := c.Compile(s)
@@ -35,12 +37,16 @@ func (c *Compiler) Compile(node ast.Node) error {
             }
         }
 
+    // if the node is an expression statement,
+    // compile the inner expression
     case *ast.ExpressionStatement:
         err := c.Compile(node.Expression)
         if err != nil {
             return err
         }
 
+    // if the node is an infix expression (a + b)
+    // compile the left and eight expression
     case *ast.InfixExpression:
         err := c.Compile(node.Left)
         if err != nil {
@@ -52,11 +58,15 @@ func (c *Compiler) Compile(node ast.Node) error {
             return err
         }
 
+    // if the node is an integer literal
+    // create an integer object
     case *ast.IntegerLiteral:
         integer := &object.Integer{Value: node.Value}
+        c.emit(code.OpConstant, c.addContant(integer))
     }
 
-return nil
+    return nil
+
 }
 
 // Append obj to the end of compiler constants slice

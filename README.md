@@ -160,3 +160,6 @@ const (
 
 The `const` keyword is used to define constants.
 The `iota` keyword is a special identifier that simplifies the process of defining incrementing constants
+
+Emit is compiler-speak for "generate" and "output" which translate to generate an instruction and add it to the result, either by printing it,
+writing it to a file or by adding it to a collection in memory.
