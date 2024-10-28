@@ -59,6 +59,12 @@ func (c *Compiler) Compile(node ast.Node) error {
 return nil
 }
 
+// Append obj to the end of compiler constants slice
+func (c *Compiler) addContant(obj object.Object) int {
+    c.constants = append(c.constants, obj)
+    return len(c.constants) - 1
+}
+
 func (c *Compiler) Bytecode() *Bytecode {
     return &Bytecode {
         Instructions: c.instructions,
@@ -66,6 +72,18 @@ func (c *Compiler) Bytecode() *Bytecode {
     }
 }
 
+func (c *Compiler) emit(op code.Opcode, operands ...int) int {
+    ins := code.Make(op, operands...)   // create bytecode with the given details
+    pos := c.addInstruction(ins)
+    return pos
+}
+
+// Add new bytecode instruction to the instructions slice
+func (c *Compiler) addInstruction(ins []byte) int {
+    posNewInstruction := len(c.instructions)
+    c.instructions = append(c.instructions, ins...)
+    return posNewInstruction
+}
 
 
 
