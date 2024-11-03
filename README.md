@@ -122,7 +122,7 @@ It's called bytecode because the opcodes contained in each instructions are one 
 > - Constants, such as numbers or characters.
 > - Registers, which are small storage locations inside the CPU.
 > - Memory Addresses, pointing to data stored elsewhere in memory.
-> - Variables, that hold data neeeded for the operations.
+> - Variables, that hold data needed for the operations.
 
 Little endian -> means that the least significant byte of the original data comes first and is stored in the lowest memory address.
 Big endian -> is the opposite whereby the most significant byte comes first
