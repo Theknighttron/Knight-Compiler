@@ -24,7 +24,13 @@ func terminalUser() (string, error)  {
     return  currentUser.Username, nil
 }
 
+func printWelcomeMessage(out io.Writer) {
+    io.WriteString(out, KNIGHT)
+    io.WriteString(out, "Ready to compile your code..!\n")
+}
+
 func Start(in io.Reader, out io.Writer) {
+    printWelcomeMessage(out)
     // initialize the scanner to read input from the specified io.Reader
 	scanner := bufio.NewScanner(in)
 
@@ -77,22 +83,18 @@ func Start(in io.Reader, out io.Writer) {
 	}
 }
 
-const MONKEY_FACE = `            __,__
-   .--.  .-"     "-.  .--.
-  / .. \/  .-. .-.  \/ .. \
- | |  '|  /   Y   \  |'  | |
- | \   \  \ 0 | 0 /  /   / |
-  \ '- ,\.-"""""""-./, -' /
-   ''-' /_   ^ ^   _\ '-''
-       |  \._   _./  |
-       \   \ '~' /   /
-        '._ '-=-' _.'
-           '-----'
+const KNIGHT = `
+  |\_
+  /  .\_
+ |   ___)
+ |    \
+ |  =  |
+ /_____\
+[_______]
 `
-
 // Formats and prints any parsing errors encountered
 func printParserErrors(out io.Writer, errors []string) {
-	io.WriteString(out, MONKEY_FACE)
+	io.WriteString(out, KNIGHT)
 	io.WriteString(out, "Woops! We ran into some knightcompiler business here!\n")
 	io.WriteString(out, " parser errors:\n")
 	for _, msg := range errors {
