@@ -27,7 +27,7 @@ func New()*Compiler {
 
 func (c *Compiler) Compile(node ast.Node) error {
     switch node := node.(type) {
-    // if the node is a program (entry pooint of AST)
+    // if the node is a program (entry point of AST)
     // compile each statement in its Statements list.
     case *ast.Program:
         for _, s := range node.Statements {
