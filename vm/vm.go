@@ -46,13 +46,24 @@ func (vm *VM) Run() error {
 
         // decode the operands in the bytecode
         switch op {
+
         case code.OpConstant:
             constIndex := code.ReadUint16(vm.instructions[ip+1:])
             ip +=2
+
             err := vm.push(vm.constants[constIndex])    // push the constants onto the stack
             if err != nil {
                 return err
             }
+
+        case code.OpAdd:
+            right := vm.pop()
+            left  := vm.pop()
+            leftValue := left.(*object.Integer).Value
+            rightValue := right.(*object.Integer).Value
+
+            result := leftValue + rightValue
+            vm.push(&object.Integer{Value: result})     // Assert the type to access their integer values
         }
     }
 
@@ -71,6 +82,7 @@ func (vm *VM) push(o object.Object) error {
     return nil
 }
 
+// Remove the top value from the stack
 func (vm *VM) pop() object.Object {
     o := vm.stack[vm.sp-1]
     vm.sp--
