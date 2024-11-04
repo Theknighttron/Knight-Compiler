@@ -1,6 +1,7 @@
 package compiler
 
 import (
+    "fmt"
     "knightcompiler/ast"
     "knightcompiler/code"
     "knightcompiler/object"
@@ -58,6 +59,13 @@ func (c *Compiler) Compile(node ast.Node) error {
             return err
         }
 
+        switch node.Operator {
+        case "+":
+            c.emit(code.OpAdd)
+        default:
+            return fmt.Errorf("Unknown operator %s", node.Operator)
+        }
+
     // if the node is an integer literal
     // create an integer object
     case *ast.IntegerLiteral:
@@ -82,10 +90,11 @@ func (c *Compiler) Bytecode() *Bytecode {
     }
 }
 
+// Generate bytcode instructions for the virtual machine
 func (c *Compiler) emit(op code.Opcode, operands ...int) int {
     ins := code.Make(op, operands...)   // create bytecode with the given details
-    pos := c.addInstruction(ins)
-    return pos
+    pos := c.addInstruction(ins)        // add the instructions to the compiler
+    return pos                          // return position of newly added instruction
 }
 
 // Add new bytecode instruction to the instructions slice
