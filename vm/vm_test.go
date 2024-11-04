@@ -39,11 +39,16 @@ func runVmTests(t  *testing.T, tests []vmTestCase) {
         // compare the output
         stackElem := vm.StackTop()
         testExpectedObject(t, tt.expected, stackElem)
+    }
 
 }
 
 // compare the VM's output with the expected value
-func testExpectedObject(t *testing.T, expected interface{}, actual object.Object) {
+func testExpectedObject(
+        t *testing.T,
+        expected interface{},
+        actual object.Object,
+) {
     t.Helper()
 
     // check if expected is integer then call testIntegerObject
@@ -87,6 +92,5 @@ func TestIntegerArithmetic(t *testing.T) {
 
         runVmTests(t, tests)
 }
-
 
 

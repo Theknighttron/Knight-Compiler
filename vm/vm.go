@@ -27,3 +27,11 @@ func New(bytecode *compiler.Bytecode) *VM {
         sp: 0,
     }
 }
+
+func (vm *VM) StackTop() object.Object {
+    if vm.sp == 0 {
+        return nil
+    }
+
+    return vm.stack[vm.sp-1]
+}
