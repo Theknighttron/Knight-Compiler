@@ -70,3 +70,9 @@ func (vm *VM) push(o object.Object) error {
 
     return nil
 }
+
+func (vm *VM) pop() object.Object {
+    o := vm.stack[vm.sp-1]
+    vm.sp--
+    return o
+}
