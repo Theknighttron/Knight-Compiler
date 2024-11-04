@@ -21,11 +21,13 @@ type Definition struct {
 
 const (
     OpConstant Opcode = iota // OpConstant represents an instruction to push a constant onto the stack.
+    OpAdd
 )
 
 // definitions maps each Opcode to its corresponding Definition.
 var definitions = map[Opcode]*Definition{
     OpConstant: {"OpConstant", []int{2}}, // OpConstant uses 2 bytes to store its operand.
+    OpAdd:      {"OpAdd", []int{}},
 }
 
 // Lookup finds the definition for a given opcode.
@@ -101,6 +103,8 @@ func (ins Instructions) fmtInstruction(def *Definition, operands []int) string {
     }
 
     switch operandCount {
+    case 0:
+        return def.Name
     case 1:
         return fmt.Sprintf("%s %d", def.Name, operands[0])
     }
