@@ -163,3 +163,25 @@ The `iota` keyword is a special identifier that simplifies the process of defini
 
 Emit is compiler-speak for "generate" and "output" which translate to generate an instruction and add it to the result, either by printing it,
 writing it to a file or by adding it to a collection in memory.
+
+```
+REPL(Read-Eval-Print-Loop)
+It is an interactive programming environment that allows users to enter commands or expressions,
+which are then processed and evaluated in real time.
+
+Read:
+The REPL reads the input from the user.
+This input can be a single expression, a command, or a block of code.
+
+Eval:
+After reading the input, the REPL evaluates or executes the input.
+This involves interpreting the code and performing the specified operations.
+
+Print:
+Once the evaluation is complete, the REPL prints the result of the evaluation back to the user.
+This feedback loop allows users to see the output of their commands immediately.
+
+Loop:
+The process repeats in a loop,
+allowing users to continuously enter new commands and see their results without restarting the session.
+```
